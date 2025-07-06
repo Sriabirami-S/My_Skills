@@ -37,6 +37,9 @@ Tic Tac Toe is a classic two-player game played on a 3x3 grid. In this console-b
 ### 6. Board Display
 - The `printBoard()` method visually displays the board after each move.
 
+## Code
+[View Code]()
+
 ## Output
 
 ![image](https://github.com/user-attachments/assets/86508763-1813-42fb-9afb-551ef99a7ae7)
