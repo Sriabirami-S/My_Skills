@@ -1,0 +1,143 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  font-family: 'Segoe UI', sans-serif;
+  cursor: none;
+  color: white;
+}
+
+/* Navigation Bar */
+nav {
+  background-image: url(../../skillsimages/skillsbg2.avif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-bottom: 30px;
+}
+nav h1 {
+  text-align: center;
+  font-size: 69px;
+  margin: 0;
+  padding: 20px 0;
+  font-style: italic;
+  transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+nav h1:hover {
+  text-shadow: 5px 5px 7px rgb(186, 31, 200);
+  transform: scale(1.05);
+}
+nav h2, nav ul, nav li {
+  display: inline;
+}
+nav ul {
+  margin-left: 60%;
+}
+nav li {
+  margin-left: 10px;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  color: skyblue;
+}
+
+/* Skills Layout */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  padding: 50px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.skill-card {
+  background-color: #1a1a1a;
+  border: 2px solid white;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+.skill-card:hover {
+  box-shadow: 0 0 25px rgb(18,145,236);
+  transform: scale(1.05);
+}
+.skill-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 20%;
+  margin-bottom: 10px;
+}
+.skill-card h3 {
+  color: skyblue;
+  margin-bottom: 10px;
+}
+
+/* Single Button */
+.skill-link a {
+  background: rgb(18,145,236);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+.skill-link a:hover {
+  background: rgb(10, 120, 200);
+}
+
+/* Footer */
+.icons {
+  text-align: center;
+  padding: 10px;
+  font-size: 40px;
+  background-color: #111;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.icons a {
+  color: skyblue;
+  transition: transform 0.3s ease-in-out;
+}
+.icons a:hover {
+  color: white;
+  transform: scale(1.2);
+}
+
+/* Pointer & Trail */
+.pointer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgb(18,145,236), rgb(18,145,236));
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  transition: width 0.1s, height 0.1s, opacity 0.2s;
+  filter: blur(3px);
+}
+.trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background: rgb(18,145,236);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.2s ease-out;
+  filter: blur(2px);
+}

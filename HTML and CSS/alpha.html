@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alpha Project – Dingo Quadruped</title>
+  <link rel="stylesheet" href="./assets/css/alpha.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+<body style="background-color: black;">
+
+  <div class="navigation">
+    <nav>
+      <h2>Sriabirami S</h2>
+      <ul>
+        <li><a href="index.html"><u>Home</u></a></li>
+        <li><a href="Skills.html"><u>Skills</u></a></li>
+        <li><a href="Projects.html"><u>Projects</u></a></li>
+        <li><a href="certification.html"><u>Certification</u></a></li>
+        <li><a href="protosem.html"><u>Protosem 3.3</u></a></li>
+      </ul>
+      <h1>Alpha Project – Dingo Quadruped Replica</h1>
+    </nav>
+  </div>
+
+  <div class="container">
+
+    <h2>🔍 Introduction</h2>
+    <p>This Alpha Project focuses on replicating and simulating a <strong>Dingo-style quadruped robot</strong> using <strong>Fusion 360</strong>, <strong>ROS</strong>, and <strong>Gazebo</strong>. Inspired by Clearpath Robotics' Dingo, this simulation demonstrates my understanding of robot kinematics, leg control, and simulation workflows.</p>
+
+    <h2>🎯 Project Objectives</h2>
+    <ul>
+      <li>Design a quadruped robot using Fusion 360</li>
+      <li>Convert models into URDF/Xacro format for ROS</li>
+      <li>Integrate robot in Gazebo for simulation</li>
+      <li>Control legs and gait via ROS topics</li>
+      <li>Enable task-space and keyboard-based control</li>
+    </ul>
+
+    <h2>🧩 About the DingoQuadruped Framework</h2>
+    <p>This simulation is based on the <a href="https://github.com/Yerbert/DingoQuadruped" target="_blank" style="color: skyblue;">Yerbert/DingoQuadruped</a> repository, featuring:</p>
+    <ul>
+      <li>6 DOF – 2 joints per leg (hip and knee)</li>
+      <li>Python-based gait engine and ROS interface</li>
+      <li>Custom <code>/task_space_cmd</code> topic to control foot positions</li>
+      <li>Packages like <code>dingo_description</code>, <code>dingo_control</code>, and <code>dingo_keyboard_control</code></li>
+    </ul>
+
+    <h2>🛠️ Workflow</h2>
+
+    <h3>1️⃣ Research and Planning</h3>
+    <p>Studied real-world quadrupeds like Spot and Dingo for leg layout, DOF, and joint strategies.</p>
+    <img src="./alphaimgs/dingoog.png" alt="Dingo Reference Image" />
+
+    <h3>2️⃣ Fusion 360 Design</h3>
+    <p>Created the robot body and articulated legs in Fusion 360. Exported STL files for simulation.</p>
+    <img src="./alphaimgs/dingofus.png" alt="Fusion 360 CAD Model" />
+
+    <h3>3️⃣ URDF/Xacro Integration</h3>
+    <p>Converted CAD files to URDF/Xacro. Defined links, joints, visual/collision elements, and inertial properties.</p>
+
+    <h3>4️⃣ Gazebo Simulation</h3>
+    <p>Tested the robot inside Gazebo with physics simulation, balance checking, and stability tests.</p>
+    <video controls muted>
+      <source src="./alphaimgs/dingogazebo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <h3>5️⃣ Leg Control and Gait</h3>
+    <p>Implemented task-space control and used the gait engine to coordinate foot positions using Python and ROS topics.</p>
+    <video controls muted>
+      <source src="./alphaimgs/rosdingo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <h2>✅ Conclusion</h2>
+    <p>This project helped me develop skills in robotic design, ROS-based control, Xacro structuring, and Gazebo simulation. I plan to extend this project into physical hardware with servos and sensors in the future.</p>
+
+
+  </div>
+  <br><br><br><br>
+
+  <footer>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/sriabirami-s-91207a295"><i class="bi bi-linkedin"></i></a>
+      <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+      <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+      <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+    </div>
+  </footer>
+  <div class="pointer"></div>
+    <script>
+        const pointer = document.querySelector('.pointer');
+        const body = document.body;
+        const trailLength = 15; // Adjust the number of trailing particles
+        const trailParticles = [];
+        const history = []; // Store mouse positions
+        const historyLimit = 20; // How many past positions to remember
+    
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        for (let i = 0; i < trailLength; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            body.appendChild(trail);
+            trailParticles.push(trail);
+        }
+    
+        body.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pointer.style.left = `${mouseX}px`;
+            pointer.style.top = `${mouseY}px`;
+    
+            pointer.style.width = '22px';
+            pointer.style.height = '22px';
+            setTimeout(() => {
+                pointer.style.width = '20px';
+                pointer.style.height = '20px';
+            }, 100);
+    
+            // Add current mouse position to history
+            history.push({ x: mouseX, y: mouseY });
+            if (history.length > historyLimit) {
+                history.shift(); // Remove the oldest position
+            }
+    
+            updateTrail();
+        });
+    
+        function updateTrail() {
+            trailParticles.forEach((particle, index) => {
+                const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+                const point = history[Math.max(0, historyIndex)];
+    
+                if (point) {
+                    particle.style.left = `${point.x}px`;
+                    particle.style.top = `${point.y}px`;
+                    particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+                } else {
+                    particle.style.opacity = 0; // Hide if no history yet
+                }
+            });
+        }
+    </script> 
+
+</body>
+</html>

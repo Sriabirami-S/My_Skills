@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Understanding sensors</title>
+  <link rel="stylesheet" href="./assets/css/assign3.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <div class="navigation">
+    <br>
+    <nav>
+      <h2>Sriabirami S</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="Skills.html">Skills</a></li>
+        <li><a href="Projects.html">Projects</a></li>
+        <li><a href="certification.html">Certification</a></li>
+        <li><a href="Assignments.html">Assignments</a></li>
+      </ul>
+      <h1 style="font-size: 60px; color: white;"><center>Interfacing PIR motion sensor with ESP8266mod</center></h1>
+    </nav>
+  </div>
+
+  <div class="container">
+<h2 style="color: skyblue; font-size: 60px;"><center>HC-SR501 PIR Motion Sensor</center></h2>
+    <h3><strong>Built with:</strong> HC-SR501 PIR Sensor + ESP8266MOD + Google Sheets</h3>
+
+   
+
+    <div class="section">
+      <h2>Introduction</h2>
+      <p>The HC-SR501 PIR Motion Sensor is used for motion detection in security and IoT systems. It detects infrared radiation changes and outputs a signal accordingly. This page details its working, oscilloscope testing, NodeMCU integration, and Google Sheets logging.</p>
+      <div class="center-image">
+        <img src="./sensorimgs/pir1.png" alt="Motion Sensor Setup Placeholder" />
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>PIR Sensor Specifications</h2>
+      <ul>
+        <li>Operating Voltage: 4.5V - 20V</li>
+        <li>Detection Angle: Up to 120°</li>
+        <li>Detection Range: 3m - 7m (Adjustable)</li>
+        <li>Delay Time: 5s - 300s (Adjustable)</li>
+        <li>Trigger Modes: Retriggerable and Non-Retriggerable</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Working Principle</h2>
+      <p>The PIR sensor uses two IR-sensitive elements. When a moving object enters its field, the infrared difference is detected, and a HIGH signal is output.</p>
+    </div>
+
+    <div class="dso">
+      <h2>Standalone Testing with Oscilloscope</h2>
+      <ul>
+        <li>HC-SR501 PIR Motion Sensor</li>
+        <li>Oscilloscope (MSO/DSO)</li>
+        <li>Power Supply (5V)</li>
+        <li>10kΩ pull-down resistor</li>
+        <li>Jumper wires</li>
+      </ul>
+      <p><strong>Key Connection:</strong> OUT pin connected to scope probe and a 10kΩ resistor to ground to avoid floating signals.</p>
+      <p><strong>Issue Fix:</strong> No output was resolved by using the pull-down resistor.</p>
+      <img src="./sensorimgs/pir3.png" alt="">
+      <img src="./sensorimgs/pir2.png" alt="Oscilloscope Testing Placeholder" height="300px" />
+      <h3>DSO Output</h3>
+      <img src="./sensorimgs/pir4.png" alt="">
+    </div>
+
+    <div class="section">
+      <h2>Arduino IDE Setup for ESP8266MOD</h2>
+      <ol>
+        <li>Install Arduino IDE from <a href="https://www.arduino.cc/en/software" target="_blank" style="color: skyblue;">official site</a>.</li>
+        <li>Add ESP8266 board URL to Preferences.</li>
+        <li>Install ESP8266 board via Boards Manager.</li>
+        <li>Select "NodeMCU 1.0 (ESP-12E Module)" and the correct COM port.</li>
+      </ol>
+      <p><strong>Driver Error Fix:</strong> Install CH340 driver if board fails to connect. Check and roll back driver if needed.</p>
+     
+    </div>
+
+    <div class="section">
+      <h2>Connection: PIR Sensor + ESP8266MOD</h2>
+      <ul>
+        <li>VCC -> 3V3</li>
+        <li>GND -> GND</li>
+        <li>OUT -> D5 (GPIO14)</li>
+      </ul>
+      <img src="./sensorimgs/pir5.png" alt="Wiring Connection Placeholder" />
+    </div>
+
+    <div class="section">
+      <h2>Basic Arduino Code</h2>
+      <div class="code">
+#define PIR_PIN D5
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIR_PIN, INPUT);
+  Serial.println("PIR Motion Sensor Initialized");
+}
+
+void loop() {
+  int motionDetected = digitalRead(PIR_PIN);
+  Serial.print("Motion Value: ");
+  Serial.println(motionDetected);
+  delay(500);
+}
+      </div>
+      <h4>Serial Monitor Output</h4>
+      <img src="./sensorimgs/pir6.png" alt="">
+    </div>
+
+    <div class="section">
+      <h2>IoT Integration with Google Sheets</h2>
+      <ol>
+        <li>Create Google Sheet with headers: Timestamp, Motion Status, Motion Value.</li>
+        <li>Open Apps Script from Extensions & add the following code:</li>
+      </ol>
+      <div class="code">
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var motionStatus = e.parameter.motionStatus || "Unknown";
+  var motionValue = e.parameter.motionValue || "N/A";
+  var timestamp = new Date();
+  sheet.appendRow([timestamp, motionStatus, motionValue]);
+  return ContentService.createTextOutput("✅ Data logged successfully");
+}
+      </div>
+      <p>Deploy as Web App (accessible by anyone) and copy the URL.</p>
+     
+    </div>
+
+    <div class="section">
+      <h2>ESP8266 Arduino Code for Google Sheets Logging</h2>
+      <div class="code">
+#include <ESP8266WiFi.h>
+#include <WiFiClientSecure.h>
+
+const char* ssid = "Redmi 10";
+const char* password = "Nithi2004";
+const char* host = "script.google.com";
+const char* fullUrl = "<YOUR_SCRIPT_URL>";
+
+WiFiClientSecure client;
+const int pirPin = D5;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(pirPin, INPUT);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+  client.setInsecure();
+}
+
+void loop() {
+  int motionValue = digitalRead(pirPin);
+  String motionStatus = (motionValue == 1) ? "Motion Detected" : "No Motion";
+  motionStatus.replace(" ", "%20");
+  String url = String(fullUrl) + "?motionValue=" + String(motionValue) + "&motionStatus=" + motionStatus;
+
+  if (client.connect(host, 443)) {
+    client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+                 "Host: " + host + "\r\n" +
+                 "Connection: close\r\n\r\n");
+  }
+  delay(5000);
+}
+      </div>
+      <h4>Google Sheets Output:</h4>
+      <img src="./assets/images/pir7.jpg" alt="Google Sheet Output Placeholder" />
+    </div>
+
+    <div class="section">
+      <h2>Conclusion</h2>
+      <p>This project demonstrates successful motion detection and real-time IoT logging using a PIR sensor, NodeMCU, and Google Sheets.</p>
+     
+    </div>
+  </div>
+  <br><br><br><br>
+
+  <footer>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/sriabirami-s-91207a295"><i class="bi bi-linkedin"></i></a>
+      <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+      <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+      <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+    </div>
+  </footer>
+   <div class="pointer"></div>
+    <script>
+        const pointer = document.querySelector('.pointer');
+        const body = document.body;
+        const trailLength = 15; // Adjust the number of trailing particles
+        const trailParticles = [];
+        const history = []; // Store mouse positions
+        const historyLimit = 20; // How many past positions to remember
+    
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        for (let i = 0; i < trailLength; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            body.appendChild(trail);
+            trailParticles.push(trail);
+        }
+    
+        body.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pointer.style.left = `${mouseX}px`;
+            pointer.style.top = `${mouseY}px`;
+    
+            pointer.style.width = '22px';
+            pointer.style.height = '22px';
+            setTimeout(() => {
+                pointer.style.width = '20px';
+                pointer.style.height = '20px';
+            }, 100);
+    
+            // Add current mouse position to history
+            history.push({ x: mouseX, y: mouseY });
+            if (history.length > historyLimit) {
+                history.shift(); // Remove the oldest position
+            }
+    
+            updateTrail();
+        });
+    
+        function updateTrail() {
+            trailParticles.forEach((particle, index) => {
+                const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+                const point = history[Math.max(0, historyIndex)];
+    
+                if (point) {
+                    particle.style.left = `${point.x}px`;
+                    particle.style.top = `${point.y}px`;
+                    particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+                } else {
+                    particle.style.opacity = 0; // Hide if no history yet
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  cursor: none;
+  font-family: Arial, sans-serif;
+  background-color: black;
+}
+
+/* Navigation */
+nav {
+  background-image: url(../../assingmentsimgs/assbg.webp);
+  color: white;
+  font-style: italic;
+}
+ul, li, h2 {
+  display: inline;
+}
+nav ul {
+  margin-left: 65%;
+}
+nav li {
+  margin-left: 10px;
+  cursor: pointer;
+}
+ a {
+  color: white;
+  text-decoration: none;
+}
+ a:hover {
+  color: skyblue;
+}
+h1 {
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 69px;
+  font-style: italic;
+  transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+h1:hover {
+  text-shadow: 5px 5px 7px rgb(31, 144, 200);
+  transform: scale(1.05);
+}
+
+/* Assignment Containers */
+.assignments-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 40px auto;
+  padding: 0 60px;
+}
+
+/* Assignment Box */
+.assignment-frame {
+  position: relative;
+  overflow: hidden;
+  width: 280px;
+  height: 180px;
+  background: black;
+  border: 2px solid white;
+  border-radius: 15px;
+  text-decoration: none;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 10px 10px 10px rgb(31, 144, 200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assignment-frame h2 {
+  z-index: 1;
+  position: relative;
+  font-size: 22px;
+}
+
+/* Protosem-like Hover Fill */
+.assignment-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgb(9, 78, 136),
+    rgba(30, 120, 200, 0.9),
+    rgb(9, 78, 136)
+  );
+  transition: left 0.4s ease-in-out;
+  z-index: 0;
+}
+.assignment-frame:hover::before {
+  left: 0;
+}
+.assignment-frame:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(30, 120, 200, 0.6),
+              0 0 30px rgba(9, 78, 136, 0.6);
+  color: black;
+}
+
+/* Footer */
+.icons {
+  text-align: center;
+  padding: 10px;
+  font-size: 40px;
+  background-color: #111;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.icons a {
+  color: skyblue;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+}
+.icons a:hover {
+  color: white;
+  transform: scale(1.2);
+}
+
+/* Mouse pointer */
+.pointer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgb(18,145,236) 0%, rgb(18,145,236) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.2s ease-in-out;
+  filter: blur(3px);
+}
+.trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background: rgb(18,145,236);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.2s ease-out;
+  filter: blur(2px);
+}

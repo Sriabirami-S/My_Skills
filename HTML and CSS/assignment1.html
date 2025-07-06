@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Cutting Assignment - Hollow Truncated Icosahedron Sphere</title>
+    <link rel="stylesheet" href="./assets/css/assign1.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+</head>
+<body style="background-color: black;">
+    <div class = "navigation">
+        <br>
+        <nav>
+            <h2>Sriabirami S</h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+               
+                <li><a href="Skills.html">Skills</a> </li>
+                <li><a href="Projects.html">Projects</a></li>
+                <li><a href="certification.html">Certification</a></li>
+                <li><a href="Assignments.html">Assignments</a></li>
+            </ul>
+           <h1>Laser Cutting – Truncated Icosahedron Sphere</h1>
+        </nav>
+
+    </div>
+
+<div class="container">
+
+
+<h2 style="color: skyblue;">1. Introduction to Laser Cutting</h2>
+
+<p>Laser cutting is a precise manufacturing process that uses a high-powered laser beam to cut, engrave, or mark materials like wood, acrylic, and metal. It is widely used in industries such as automotive, aerospace, and electronics due to its accuracy, speed, and clean finish.</p>
+<p>For this assignment, laser cutting was used to fabricate a hollow truncated icosahedron sphere from 2mm MDF sheets, ensuring clean edges and precise assembly.</p>
+<br>
+<div class="center-image">
+    <img src="./laserimgs/lasermachine.jpg" alt="Laser Cutting Machine">
+</div>
+<br>
+<p style="text-align: center;">Laser Cutting Machine</p>
+<br>
+<h2 style="color: skyblue;">2. Objective:</h2>
+<p>The objective of this project was to design a hollow truncated icosahedron sphere with a 50mm outer diameter using MDF (2mm thickness) for laser cutting and assembly.</p>
+
+<strong>Design Specifications:</strong>
+<ul>
+    <li><strong>Outer Sphere Diameter:</strong> 50mm</li>
+    <li><strong>Material Thickness:</strong> 2mm MDF</li>
+    <li><strong>Composition:</strong> 12 Pentagons + 20 Hexagons</li>
+    <li><strong>Edge Length:</strong> 19.5mm</li>
+    <li><strong>Dihedral Angle:</strong> 41.81° (Pentagon-Hexagon)</li>
+</ul>
+<br>
+
+<h2 style="color: skyblue;">3. Truncated Icosahedron</h2>
+<p>A truncated icosahedron is a geometric shape composed of 12 pentagonal and 20 hexagonal faces. It resembles a football and is commonly used as the structure for soccer balls.</p>
+<br>
+<div class="center-image">
+    <img src="./laserimgs/footballref.jpg" alt="Truncated Icosahedron">
+</div>
+<br>
+<p style="text-align: center;">Truncated Icosahedron Structure (like Football)</p>
+<br>
+<h2 style="color: skyblue;">4. Design and Assembly Procedure</h2>
+
+<h3><b>Step 1:</b> Creating Sketches</h3>
+<p>In Fusion 360, we created a base sketch of a pentagon and a hexagon, ensuring the edge length was precisely set to 19.5mm.</p>
+
+<h3><b>Step 2:</b> Assembling the Faces</h3>
+<p>Using the Move & Rotate Tool, we arranged the pentagons and hexagons into a spherical structure. The dihedral angle was set to 41.81° between the pentagons and hexagons.</p>
+
+<h3><b>Step 3:</b> Preparing for Laser Cutting</h3>
+<p>The design was flattened using the Unfold Tool in Fusion 360 and exported as a DXF file for laser cutting.</p>
+
+<div class="center-image">
+    <img src="./laserimgs/penagon and hexagon dxf.png" alt="DXF File">
+</div>
+<br>
+<p style="text-align: center;">DXF File for Laser Cutting</p>
+
+<h3><b>Step 4:</b> Laser Cutting</h3>
+<p>The MDF sheets were laser cut precisely to produce clean-edged hexagons and pentagons. This ensured easy assembly.</p>
+
+<h3><b>Step 5:</b> Final Assembly</h3>
+<p>The cut pieces were carefully assembled to form a hollow truncated icosahedron sphere using adhesive.</p>
+
+<div class="center-image">
+    <img src="./laserimgs/football.png" alt="Final Design">
+    <img src="./laserimgs/sphere.jpg" alt="">
+</div>
+<br>
+<p style="text-align: center;">Final Truncated Icosahedron Sphere Design</p>
+<br>
+<h2 style="color: skyblue;">5. Challenges Faced</h2>
+<ul>
+    <li><strong>Alignment Issues:</strong> Ensuring proper alignment of all faces was challenging but overcome by referencing the base structure.</li>
+    <li><strong>Edge Burning:</strong> Minor burns on the edges were minimized by adjusting the laser power settings.</li>
+</ul>
+<br>
+<h2 style="color: skyblue;">6. Learning Outcomes</h2>
+<p>This project provided valuable hands-on experience in:</p>
+<ul>
+    <li>Geometric modeling and polyhedron design.</li>
+    <li>DXF file generation and precision laser cutting.</li>
+    <li>Proper assembly techniques using precise angles and edge lengths.</li>
+    <br><br>
+</ul>
+
+</div>
+<br><br><br>
+<footer>
+    <div class="icons">
+    <a href="https://www.linkedin.com/in/sriabirami-s-91207a295" ><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+    <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+    <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+    </div>
+</footer>
+<div class="pointer"></div>
+
+
+    <script>
+        const pointer = document.querySelector('.pointer');
+        const body = document.body;
+        const trailLength = 15; // Adjust the number of trailing particles
+        const trailParticles = [];
+        const history = []; // Store mouse positions
+        const historyLimit = 20; // How many past positions to remember
+    
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        for (let i = 0; i < trailLength; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            body.appendChild(trail);
+            trailParticles.push(trail);
+        }
+    
+        body.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pointer.style.left = `${mouseX}px`;
+            pointer.style.top = `${mouseY}px`;
+    
+            pointer.style.width = '22px';
+            pointer.style.height = '22px';
+            setTimeout(() => {
+                pointer.style.width = '20px';
+                pointer.style.height = '20px';
+            }, 100);
+    
+            // Add current mouse position to history
+            history.push({ x: mouseX, y: mouseY });
+            if (history.length > historyLimit) {
+                history.shift(); // Remove the oldest position
+            }
+    
+            updateTrail();
+        });
+    
+        function updateTrail() {
+            trailParticles.forEach((particle, index) => {
+                const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+                const point = history[Math.max(0, historyIndex)];
+    
+                if (point) {
+                    particle.style.left = `${point.x}px`;
+                    particle.style.top = `${point.y}px`;
+                    particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+                } else {
+                    particle.style.opacity = 0; // Hide if no history yet
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+

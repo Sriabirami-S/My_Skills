@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PIR Motion Sensor – PCB Design using KiCad</title>
+  <link rel="stylesheet" href="./assets/css/pcb.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+<body style="background-color: black;">
+
+  <div class="navigation">
+    <nav>
+      <h2>Sriabirami S</h2>
+            <ul>
+        <li><a href="index.html"><u>Home</u></a></li>
+        <li><a href="Skills.html"><u>Skills</u></a></li>
+        <li><a href="Projects.html"><u>Projects</u></a></li>
+        <li><a href="certification.html"><u>Certification</u></a></li>
+        <li><a href="Assignments.html"><u>Assignments</u></a></li>
+      </ul>
+
+      <h1>PIR Motion Sensor – PCB Design</h1>
+    </nav>
+  </div>
+
+  <div class="container">
+
+    <h2>🔍 Introduction</h2>
+    <p>This project involves designing a basic motion detection circuit using a <strong>PIR (Passive Infrared) sensor</strong>. The goal was to create a compact and reliable <strong>PCB layout</strong> that interfaces a PIR sensor with an <strong>ESP8266</strong> and other passive components. The board was fully designed in <strong>KiCad</strong> from schematic to 3D view.</p>
+
+    <h2>🧩 Design Overview</h2>
+    <ul>
+      <li><strong>Sensor Module:</strong> HC-SR501 PIR sensor</li>
+      <li><strong>Microcontroller:</strong> ESP8266MOD (NodeMCU)</li>
+      <li><strong>Regulator:</strong> AMS1117 (3.3V LDO)</li>
+      <li><strong>Output:</strong> LED indicator</li>
+      <li><strong>Software:</strong> KiCad 7</li>
+    </ul>
+
+    <h2>⚙️ Circuit Description</h2>
+    <p>The PIR detects motion and sends a HIGH signal to the ESP8266. The ESP can be programmed to trigger an LED or send data to the cloud (e.g., Google Sheets). The board uses AMS1117 to convert 5V USB to 3.3V for the ESP8266.</p>
+  <div class="images">
+      <img src="./pcbimgs/pcbckt.png" alt="Schematic View">
+  </div>
+    <h2>🛠️ PCB Design Steps</h2>
+    <ul>
+      <li><strong>Schematic:</strong> Designed in KiCad with correct pin mapping</li>
+      <li><strong>Footprints:</strong> Custom modules added for ESP and PIR</li>
+      <li><strong>Routing:</strong> 2-layer design with short, clean signal paths</li>
+      <li><strong>3D View:</strong> Verified in KiCad's 3D viewer</li>
+    </ul>
+
+    <h2>📸 Design Previews</h2>
+    <div class="images">
+      <img src="./pcbimgs/pcbschematic.png" alt="Schematic View"><br>
+      <img src="./pcbimgs/pcblayout.png" alt=""><br>
+      <img src="./pcbimgs/pcb3d.png" alt="PCB Layout View">
+    </div>
+
+     <div class="download-box">
+  <a href="https://drive.google.com/drive/folders/1D-lUWtSolMtM7v4oyMhLSt7UpHm6Di8F?usp=sharing" download>
+    📄 View Documentation 
+  </a>
+</div>
+
+
+
+    <h2>✅ Conclusion</h2>
+    <p>This project gave me practical experience in converting a simple motion-sensing circuit into a professional PCB layout using KiCad. I also learned about component placement, analog-digital separation, and preparing Gerber files for manufacturing.</p>
+
+  </div>
+  <br><br><br><br>
+
+  <footer>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/sriabirami-s-91207a295"><i class="bi bi-linkedin"></i></a>
+      <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+      <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+      <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+    </div>
+  </footer>
+  <div class="pointer"></div>
+    <script>
+        const pointer = document.querySelector('.pointer');
+        const body = document.body;
+        const trailLength = 15; // Adjust the number of trailing particles
+        const trailParticles = [];
+        const history = []; // Store mouse positions
+        const historyLimit = 20; // How many past positions to remember
+    
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        for (let i = 0; i < trailLength; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            body.appendChild(trail);
+            trailParticles.push(trail);
+        }
+    
+        body.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pointer.style.left = `${mouseX}px`;
+            pointer.style.top = `${mouseY}px`;
+    
+            pointer.style.width = '22px';
+            pointer.style.height = '22px';
+            setTimeout(() => {
+                pointer.style.width = '20px';
+                pointer.style.height = '20px';
+            }, 100);
+    
+            // Add current mouse position to history
+            history.push({ x: mouseX, y: mouseY });
+            if (history.length > historyLimit) {
+                history.shift(); // Remove the oldest position
+            }
+    
+            updateTrail();
+        });
+    
+        function updateTrail() {
+            trailParticles.forEach((particle, index) => {
+                const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+                const point = history[Math.max(0, historyIndex)];
+    
+                if (point) {
+                    particle.style.left = `${point.x}px`;
+                    particle.style.top = `${point.y}px`;
+                    particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+                } else {
+                    particle.style.opacity = 0; // Hide if no history yet
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/styless.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body style="background-color:black;">
+    <div class = "navigation">
+        <br>
+        <nav>
+            <h3>Sriabirami S</h3>
+            <ul>
+                <li><a href="index.html"><b>Home</b></a></li>
+               
+                <li><a href="Skills.html"><b>Skills</b></a> </li>
+                <li><a href="Projects.html"><b>Projects</b></a></li>
+                <li><a href="certification.html"><b>Certification</b></a></li>
+                <li><a href="protosem.html"><b>Protosem 3.3</b></a></li> 
+               
+            </ul>
+            <h1>Sriabirami's Portfolio</h1>
+        </nav>
+
+    </div>
+    
+    <div class="content">
+          <h2>I'm Sriabirami S</h2>
+          <br><br>
+          <p>
+             I'm an Electronics and Communication Engineering student at Government College of Engineering, Salem, with a diverse set of interests spanning both core electronics and software development. I completed my schooling at Holy Angels' Girls Matric Higher Secondary School, Salem.  Alongside my core studies, I am also delving into software development, with a keen interest in learning Java and advancing my programming skills.
+
+          </p>
+          
+
+    </div>
+    <div class="image">
+        <img  src="./indeximages/SRIABIRAMIS.jpg" alt="">
+    </div>
+    <br><br><br>
+    <footer>
+        <div class="icons">
+            <a href="https://www.linkedin.com/in/sriabirami-s-91207a295" ><i class="bi bi-linkedin"></i></a>
+        <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+        <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+        <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+        </div>
+    </footer>
+    <div class="pointer"></div>
+    <script>
+        const pointer = document.querySelector('.pointer');
+        const body = document.body;
+        const trailLength = 15; // Adjust the number of trailing particles
+        const trailParticles = [];
+        const history = []; // Store mouse positions
+        const historyLimit = 20; // How many past positions to remember
+    
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        for (let i = 0; i < trailLength; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            body.appendChild(trail);
+            trailParticles.push(trail);
+        }
+    
+        body.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pointer.style.left = `${mouseX}px`;
+            pointer.style.top = `${mouseY}px`;
+    
+            pointer.style.width = '22px';
+            pointer.style.height = '22px';
+            setTimeout(() => {
+                pointer.style.width = '20px';
+                pointer.style.height = '20px';
+            }, 100);
+    
+            // Add current mouse position to history
+            history.push({ x: mouseX, y: mouseY });
+            if (history.length > historyLimit) {
+                history.shift(); // Remove the oldest position
+            }
+    
+            updateTrail();
+        });
+    
+        function updateTrail() {
+            trailParticles.forEach((particle, index) => {
+                const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+                const point = history[Math.max(0, historyIndex)];
+    
+                if (point) {
+                    particle.style.left = `${point.x}px`;
+                    particle.style.top = `${point.y}px`;
+                    particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+                } else {
+                    particle.style.opacity = 0; // Hide if no history yet
+                }
+            });
+        }
+    </script>
+   
+</body>
+</html>

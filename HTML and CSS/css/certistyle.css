@@ -1,0 +1,242 @@
+h1{
+    
+    color: white;
+    font-size:69px ;
+    margin: 0;
+    font-style: italic;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+h1:hover {
+  text-shadow:5px 5px 7px rgb(31, 144, 200);
+  transform: scale(1.05); /* Make the text scale up slightly on hover */
+}
+nav{
+    background-image: url(../../certificateimages/certi2.jpg);
+    color: white;
+    
+    font-style: italic;
+  }
+  ul,li,h2{
+    display: inline;
+  }
+   nav ul{
+    margin-left: 60%;
+  }
+  nav li{
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  a{
+  color:white;
+  
+  }
+  a:hover{
+    color: skyblue;
+  }
+
+.oracle{
+    text-align: center;
+}
+.java {
+    text-align: center;
+    
+}
+
+.java p{
+    color: white;
+    font-size: 30px;
+}
+
+.comnet{
+    text-align: center;
+     
+}
+.comnet img{
+    width: 555px;
+    height: 393px;
+}
+.comnet p{
+    color:white;
+    font-size: 30px;
+}
+.oracle p{
+    color:white;
+    font-size: 30px;
+}
+.icons{
+  text-align: center;
+  padding: 10px;
+  font-size: 40px;
+  background-color: #111;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin:0px;
+}
+.icons a{
+  color: skyblue;
+  text-decoration: none;
+  display: inline-block; /* Ensure transform works correctly */
+transition: transform 0.3s ease-in-out;
+  /*margin: 0 15px;*/
+}
+.icons a:hover{
+  color: white;
+  transform: scale(1.2); 
+}
+  .content{
+    height:500px;
+    width: 800px;
+    color: aliceblue;
+    font-size: 20px;
+    margin-left: 50%;
+    margin-top: 10%;
+    margin-right: 10%;
+    
+  
+  }
+ 
+  .image1{
+    height:500px;
+    width:400px;
+     position: absolute;
+     top: 60px;
+     left: 60px;
+    margin-left: 10%;
+    margin-right:70% ;
+   
+  }
+  .image1 img{
+    height:500px;
+    width:500px;
+   margin-top: 20%;
+    justify-content: center;
+    border-radius: 10%;
+    display:flex;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+   
+  
+  }
+  .image1:hover img{
+    transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue; /* Optional: Adjust hover shadow */
+}
+  .image2{
+    height:500px;
+    width:400px;
+     position: absolute;
+     top: 800px;
+     left: 60px;
+    margin-left: 10%;
+    margin-right:70% ;
+   
+  }
+  .image2 img{
+    height:500px;
+    width:500px;
+   margin-top: 20%;
+    justify-content: center;
+    border-radius: 10%;
+    display:flex;
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+   }
+   .image2:hover img{
+    transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue; /* Optional: Adjust hover shadow */
+}
+
+   .image3{
+    height:500px;
+    width:400px;
+     position: absolute;
+     top: 1450px;
+     left: 60px;
+    margin-left: 10%;
+    margin-right:70% ;
+   
+  }
+  .image3 img{
+    height:500px;
+    width:500px;
+   margin-top: 20%;
+    justify-content: center;
+    border-radius: 10%;
+    display:flex;
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+   }
+   .image3:hover img{
+    transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue; /* Optional: Adjust hover shadow */
+}
+   .image4{
+    height:500px;
+    width:400px;
+     position: absolute;
+     top: 2120px;
+     left: 60px;
+    margin-left: 10%;
+    margin-right:70% ;
+   
+  }
+  .image4 img{
+    height:500px;
+    width:500px;
+   margin-top: 20%;
+    justify-content: center;
+    border-radius: 10%;
+    display:flex;
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+   }
+   .image4:hover img{
+    transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue; /* Optional: Adjust hover shadow */
+}
+   body {
+    cursor: none; /* Hide the default cursor */
+}
+
+.pointer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px; /* Slightly bigger main pointer */
+    height: 50px; 
+    background: radial-gradient(circle, rgb(18,145,236) 0%, rgb(18,145,236) 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    mix-blend-mode: screen;
+    transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.2s ease-in-out;
+    filter: blur(3px);
+}
+
+.trail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background:rgb(18,145,236);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.2s ease-out;
+    filter: blur(2px);
+}
+
+
+
+
+
+
+   

@@ -1,0 +1,173 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 69px;
+  font-style: italic;
+  margin: 0;
+  transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+h1:hover {
+  text-shadow: 5px 5px 7px rgb(31, 144, 200);
+  transform: scale(1.05);
+}
+
+nav {
+  background-image: url(../../projectsimages/projectbimg.jpg);
+  color: white;
+  font-style: italic;
+}
+
+ul, li, h2 {
+  display: inline;
+}
+
+nav ul {
+  margin-left: 60%;
+}
+
+nav li {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+nav a {
+  color: white;
+}
+
+a:hover {
+  color: skyblue;
+}
+
+h2 {
+  color: white;
+}
+
+.content {
+  height: 500px;
+  width: 700px;
+  color: aliceblue;
+  font-size: 20px;
+  margin-left: 50%;
+  margin-top: 10%;
+  margin-right: 10%;
+}
+
+.image,
+.image1 {
+  height: 500px;
+  width: 400px;
+  position: absolute;
+  left: 2px;
+  margin-left: 10%;
+  margin-right: 70%;
+}
+
+.image {
+  top: 60px;
+}
+
+.image1 {
+  top: 700px;
+}
+
+.image img,
+.image1 img {
+  height: 500px;
+  width: 500px;
+  margin-top: 20%;
+  justify-content: center;
+  border-radius: 10%;
+  display: flex;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 10px 10px 10px rgb(31, 144, 200);
+}
+
+.image:hover img,
+.image1:hover img {
+  transform: scale(1.05);
+  box-shadow: 12px 12px 15px skyblue;
+}
+
+footer {
+  background-color: #111;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.icons {
+  text-align: center;
+  padding: 10px;
+  font-size: 40px;
+}
+
+.icons a {
+  color: skyblue;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+}
+
+.icons a:hover {
+  color: white;
+  transform: scale(1.2);
+}
+
+body {
+  cursor: none;
+}
+
+.pointer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgb(18, 145, 236) 0%, rgb(18, 145, 236) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: screen;
+  transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.2s ease-in-out;
+  filter: blur(3px);
+}
+
+.trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background: rgb(18, 145, 236);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.2s ease-out;
+  filter: blur(2px);
+}
+
+a {
+  color: red;
+}
+
+.pro1 p, .pro2 p {
+  font-size: 20px;
+  color: white;
+}
+
+.pro1 img {
+  width: 555px;
+  height: 555px;
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROS 2 & Gazebo Simulation</title>
+  <link rel="stylesheet" href="./assets/css/ros.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+<body style="background-color: black;">
+
+  <div class="navigation">
+    <nav>
+      <h2>Sriabirami S</h2>
+             <ul>
+        <li><a href="index.html"><u>Home</u></a></li>
+        <li><a href="Skills.html"><u>Skills</u></a></li>
+        <li><a href="Projects.html"><u>Projects</u></a></li>
+        <li><a href="certification.html"><u>Certification</u></a></li>
+        <li><a href="Assignments.html"><u>Assignments</u></a></li>
+      </ul>
+
+      <h1>ROS 2 & Gazebo Simulation</h1>
+    </nav>
+  </div>
+
+  <div class="container">
+
+    <h2>🔍 1. What is ROS 2?</h2>
+    <p><strong>ROS 2 (Robot Operating System 2)</strong> is an open-source robotics middleware that helps build scalable, real-time robot systems. It supports distributed communication, hardware abstraction, simulation (Gazebo), and visualization (RViz).</p>
+
+    <h2>💻 2. System Requirements</h2>
+    <ul>
+      <li><strong>OS:</strong> Ubuntu 22.04 LTS (64-bit)</li>
+      <li><strong>CPU:</strong> Dual/Quad core</li>
+      <li><strong>RAM:</strong> Minimum 4 GB (8–16 GB recommended)</li>
+      <li><strong>Disk:</strong> ~5 GB (base + simulation tools)</li>
+      <li><strong>GPU:</strong> Required for RViz & Gazebo (integrated OK)</li>
+    </ul>
+
+    <h2>💾 3. Space Occupied</h2>
+    <ul>
+      <li>ROS 2 Humble Desktop: ~2.5 GB</li>
+      <li>Gazebo Simulator: ~1–2 GB</li>
+      <li>Total: ~4–5 GB</li>
+    </ul>
+
+    <h2>⚙️ 4. Installing ROS 2 Humble</h2>
+    <div class="code">
+<pre>
+sudo apt update
+sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+sudo apt install curl gnupg2 lsb-release
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key \
+  -o /usr/share/keyrings/ros-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] \
+http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" \
+| sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+sudo apt update
+sudo apt install ros-humble-desktop ros-dev-tools
+</pre>
+    </div>
+
+    <h2>🔧 5. Source Environment</h2>
+    <div class="code">
+<pre>
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+</pre>
+    </div>
+
+    <h2>🛠️ 6. ROS 2 Workspace Setup</h2>
+    <div class="code">
+<pre>
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+colcon build
+source install/setup.bash
+</pre>
+    </div>
+
+    <h2>🧩 7. Creating URDF/Xacro Files</h2>
+     <div class="center-image">
+    <img src="./rosimgs/rosdes.png" alt="Final Design">
+</div>
+    <ul>
+      <li>Export parts from Fusion 360 as `.STL`</li>
+      <li>Create a description package:</li>
+    </ul>
+    <div class="code">
+<pre>
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_cmake my_robot_description
+</pre>
+    </div>
+    <p>Organize your package:</p>
+    <div class="code">
+<pre>
+my_robot_description/
+├── urdf/
+│   ├── robot.urdf.xacro
+│   ├── base.xacro
+│   └── wheel.xacro
+└── launch/
+    └── display.launch.py
+</pre>
+    </div>
+
+    <h2>📦 8. Build & View in RViz2</h2>
+    <div class="code">
+<pre>
+cd ~/ros2_ws
+colcon build
+source install/setup.bash
+ros2 launch my_robot_description display.launch.py
+</pre>
+    </div>
+
+    <h2>🧪 9. Run Simulation in Gazebo</h2>
+    <p>Create <code>gazebo.launch.py</code> in launch folder and run:</p>
+    <div class="code">
+<pre>
+ros2 launch my_robot_description gazebo.launch.py
+</pre>
+    </div>
+
+    <p>Or spawn manually:</p>
+    <div class="code">
+<pre>
+ros2 run gazebo_ros spawn_entity.py \
+  -topic /robot_description \
+  -entity my_bot \
+  -x 0 -y 0 -z 1
+</pre>
+    </div>
+
+    <h2>🔌 10. Add Gazebo Plugin (URDF)</h2>
+    <div class="code">
+<pre>
+&lt;gazebo&gt;
+  &lt;plugin name="gazebo_ros_control" filename="libgazebo_ros2_control.so"/&gt;
+&lt;/gazebo&gt;
+</pre>
+    </div>
+
+    <h2>🎥 11. Gazebo Simulation Preview</h2>
+    <div class="center-video">
+      <video class="video-box" controls>
+        <source src="./rosimgs/gazebo simulation of another robot.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+   <div class="download-box">
+  <a href="https://drive.google.com/drive/folders/15Y_urYnEtnhFVpu3vpZzrKa4QERxSbId?usp=sharing" download>
+    📄 View Documentation 
+  </a>
+</div>
+
+  </div>
+
+  <footer>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/sriabirami-s-91207a295"><i class="bi bi-linkedin"></i></a>
+      <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+      <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+      <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+    </div>
+    <br><br><br><br>
+  </footer>
+ <div class="pointer"></div>
+    <script>
+        const pointer = document.querySelector('.pointer');
+        const body = document.body;
+        const trailLength = 15; // Adjust the number of trailing particles
+        const trailParticles = [];
+        const history = []; // Store mouse positions
+        const historyLimit = 20; // How many past positions to remember
+    
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        for (let i = 0; i < trailLength; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            body.appendChild(trail);
+            trailParticles.push(trail);
+        }
+    
+        body.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pointer.style.left = `${mouseX}px`;
+            pointer.style.top = `${mouseY}px`;
+    
+            pointer.style.width = '22px';
+            pointer.style.height = '22px';
+            setTimeout(() => {
+                pointer.style.width = '20px';
+                pointer.style.height = '20px';
+            }, 100);
+    
+            // Add current mouse position to history
+            history.push({ x: mouseX, y: mouseY });
+            if (history.length > historyLimit) {
+                history.shift(); // Remove the oldest position
+            }
+    
+            updateTrail();
+        });
+    
+        function updateTrail() {
+            trailParticles.forEach((particle, index) => {
+                const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+                const point = history[Math.max(0, historyIndex)];
+    
+                if (point) {
+                    particle.style.left = `${point.x}px`;
+                    particle.style.top = `${point.y}px`;
+                    particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+                } else {
+                    particle.style.opacity = 0; // Hide if no history yet
+                }
+            });
+        }
+    </script>
+</body>
+</html>

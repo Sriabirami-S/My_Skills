@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/certistyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body style="background-color: black;">
+  <div class = "navigation">
+    <br>
+    <nav>
+        <h2>Sriabirami S</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+           
+            <li><a href="Skills.html">Skills</a> </li>
+            <li><a href="Projects.html">Projects</a></li>
+            <li><a href="certification.html">Certification</a></li>
+             <li><a href="protosem.html">Protosem 3.3</a></li>
+       
+        </ul>
+        <h1>Certification </h1>
+    </nav>
+
+</div>
+
+   
+ 
+
+<div class="content">
+  <br><br>
+  
+  <br><br>
+  <p><b>Java: </b><br>Successfully completed a free online course on Java Programming from Great Learning Academy and it was awarded in October 2024</p>
+</div>
+<div class="image1">
+<br>
+<br><br><br>
+<img src="./certificateimages/java4.jpg" alt="">
+</div>
+  
+  <div class="content">
+    <br><br>
+   
+    <br><br>
+    <p><b>SIGNAL SPARK (PROJECT):</b> <br>First place in the Intra-Departmental Technical Symposium "COMNET 2K24", organized by Government College Of Engineering, Salem on 7th November 2024.</p>
+    <p><b>TECHNICAL GUESS (QUIZ):</b><br> Secured Third place in the Intra-Departmental Technical Symposium "COMNET 2K24", organized by Government College Of Engineering, Salem on 7th November 2024.
+</p>
+  </div>
+  <div class="image2">
+  <br>
+  
+  <img src="./certificateimages/comnet3.jpg" alt="">
+  </div>
+  <div class="content">
+    <br><br>
+    
+    <br><br>
+    <p><b>HTML: </b><br>Successfully completed a free online course on HTML Tutorial from Great Learning Academy and it was awarded in April 2025.</p>
+  </div>
+  <div class="image3">
+    <br>
+    
+    <img src="./certificateimages/Sriabirami S html certificate_page-0001.jpg" alt="">
+    </div>
+    <div class="content">
+      <br><br>
+      
+      <br><br>
+      <p><b>CSS: </b><br>Successfully completed a free online course on CSS Tutorial from Great Learning Academy and it was awarded in April 2025.</p>
+    </div>
+  <div class="image4">
+    <br>
+    
+    <img src="./certificateimages/Sriabirami S css certificate_page-0001.jpg" alt="">
+    </div>
+  
+    <br><br><br>
+  <footer>
+    <div class="icons">
+        <a href="https://www.linkedin.com/in/sriabirami-s-91207a295" ><i class="bi bi-linkedin"></i></a>
+    <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+    <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+    <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+    </div>
+</footer>
+<div class="pointer"></div>
+<script>
+    const pointer = document.querySelector('.pointer');
+    const body = document.body;
+    const trailLength = 15; // Adjust the number of trailing particles
+    const trailParticles = [];
+    const history = []; // Store mouse positions
+    const historyLimit = 20; // How many past positions to remember
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    for (let i = 0; i < trailLength; i++) {
+        const trail = document.createElement('div');
+        trail.classList.add('trail');
+        body.appendChild(trail);
+        trailParticles.push(trail);
+    }
+
+    body.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        pointer.style.left = `${mouseX}px`;
+        pointer.style.top = `${mouseY}px`;
+
+        pointer.style.width = '22px';
+        pointer.style.height = '22px';
+        setTimeout(() => {
+            pointer.style.width = '20px';
+            pointer.style.height = '20px';
+        }, 100);
+
+        // Add current mouse position to history
+        history.push({ x: mouseX, y: mouseY });
+        if (history.length > historyLimit) {
+            history.shift(); // Remove the oldest position
+        }
+
+        updateTrail();
+    });
+
+    function updateTrail() {
+        trailParticles.forEach((particle, index) => {
+            const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+            const point = history[Math.max(0, historyIndex)];
+
+            if (point) {
+                particle.style.left = `${point.x}px`;
+                particle.style.top = `${point.y}px`;
+                particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+            } else {
+                particle.style.opacity = 0; // Hide if no history yet
+            }
+        });
+    }
+</script>
+</body>
+</html>

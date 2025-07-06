@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RFID Access System</title>
+  <link rel="stylesheet" href="./assets/css/rfid.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+<body style="background-color: black;">
+  <div class="navigation">
+    <nav>
+      <h2>Sriabirami S</h2>
+            <ul>
+        <li><a href="index.html"><u>Home</u></a></li>
+        <li><a href="Skills.html"><u>Skills</u></a></li>
+        <li><a href="Projects.html"><u>Projects</u></a></li>
+        <li><a href="certification.html"><u>Certification</u></a></li>
+        <li><a href="Assignments.html"><u>Assignments</u></a></li>
+      </ul>
+
+      <h1>IoT-Based RFID Access System</h1>
+    </nav>
+  </div>
+
+  <div class="container">
+
+    <h2>1. Project Overview</h2>
+    <p>This system authenticates RFID cards using an ESP32, and logs authorized/unauthorized entries in real-time to Google Sheets via HTTP POST. It also uses LEDs, a buzzer, an LCD, a servo for physical access, and an RTC for timestamps.</p>
+
+    <h2>2. Components Used</h2>
+    <ul>
+      <li>ESP32</li>
+      <li>RC522 RFID Reader</li>
+      <li>16x2 LCD with I2C</li>
+      <li>Servo Motor</li>
+      <li>DS1302 RTC Module</li>
+      <li>LED, Buzzer</li>
+      <li>Google Sheet (for logging)</li>
+    </ul>
+
+    <h2>3. RFID to ESP32 Connections</h2>
+    <ul>
+      <li>SDA → GPIO5</li>
+      <li>SCK → GPIO18</li>
+      <li>MOSI → GPIO23</li>
+      <li>MISO → GPIO19</li>
+      <li>RST → GPIO4</li>
+      <li>VCC → 3.3V</li>
+      <li>GND → GND</li>
+    </ul>
+
+    <h2>4. Circuit Components</h2>
+    <ul>
+      <li>LED: GPIO2</li>
+      <li>Buzzer: GPIO15</li>
+      <li>Servo: GPIO13</li>
+      <li>RTC: CLK→GPIO14, DAT→GPIO27, RST→GPIO26</li>
+    </ul>
+
+    <h2>5. Code Snippet (UID match with LED/Buzzer)</h2>
+    <div class="code">
+<pre>
+#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+#include &lt;SPI.h&gt;
+#include &lt;MFRC522.h&gt;
+#include &lt;ESP32Servo.h&gt;
+#include &lt;ThreeWire.h&gt;
+#include &lt;RtcDS1302.h&gt;
+#include &lt;WiFi.h&gt;
+#include &lt;HTTPClient.h&gt;
+
+#define SS_PIN 5
+#define RST_PIN 4
+#define LED_PIN 2
+#define BUZZER_PIN 15
+#define SERVO_PIN 13
+#define DS1302_CLK 14
+#define DS1302_IO 27
+#define DS1302_CE 26
+
+byte knownUID[] = { 0xED, 0x0D, 0x0C, 0x32 };
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+MFRC522 mfrc522(SS_PIN, RST_PIN);
+Servo gateServo;
+ThreeWire myWire(DS1302_IO, DS1302_CLK, DS1302_CE);
+RtcDS1302&lt;ThreeWire&gt; Rtc(myWire);
+
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
+const String scriptURL = "https://script.google.com/macros/s/XXXXXXXXXXXX/exec";
+
+void setup() {
+  Serial.begin(115200);
+  SPI.begin();
+  mfrc522.PCD_Init();
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  lcd.begin();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Scan your card");
+  gateServo.setPeriodHertz(50);
+  gateServo.attach(SERVO_PIN, 500, 2400);
+  gateServo.write(0);
+  
+  Rtc.Begin();
+  RtcDateTime customTime(2025, 4, 19, 15, 45, 00);
+  Rtc.SetDateTime(customTime);
+  
+  if (!Rtc.IsDateTimeValid()) Serial.println("RTC DateTime invalid!");
+  if (!Rtc.GetIsRunning()) {
+    Serial.println("Starting RTC...");
+    Rtc.SetIsRunning(true);
+  }
+
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nWiFi connected.");
+}
+
+void loop() {
+  if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) return;
+
+  bool match = true;
+  String uidStr = "";
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("UID: ");
+  
+  for (byte i = 0; i < mfrc522.uid.size; i++) {
+    byte val = mfrc522.uid.uidByte[i];
+    uidStr += String(val, HEX);
+    lcd.print(val, HEX);
+    if (i < mfrc522.uid.size - 1) {
+      lcd.print(":");
+      uidStr += ":";
+    }
+    if (val != knownUID[i]) match = false;
+  }
+
+  uidStr.toUpperCase();
+
+  if (match) {
+    Serial.println("✅ Access Granted");
+    lcd.setCursor(0, 1);
+    lcd.print("Access: Granted");
+    digitalWrite(LED_PIN, HIGH);
+    digitalWrite(BUZZER_PIN, HIGH);
+    gateServo.write(180);
+    delay(500);
+    digitalWrite(LED_PIN, LOW);
+    digitalWrite(BUZZER_PIN, LOW);
+    delay(3000);
+    gateServo.write(0);
+    sendToGoogleSheet(uidStr, "Granted");
+  } else {
+    Serial.println("❌ Access Denied");
+    lcd.setCursor(0, 1);
+    lcd.print("Access: Denied");
+    for (int i = 0; i &lt; 3; i++) {
+      digitalWrite(LED_PIN, HIGH);
+      digitalWrite(BUZZER_PIN, HIGH);
+      delay(200);
+      digitalWrite(LED_PIN, LOW);
+      digitalWrite(BUZZER_PIN, LOW);
+      delay(200);
+    }
+    sendToGoogleSheet(uidStr, "Denied");
+  }
+
+  RtcDateTime now = Rtc.GetDateTime();
+  printDateTime(now);
+  mfrc522.PICC_HaltA();
+  mfrc522.PCD_StopCrypto1();
+  delay(1000);
+}
+
+void sendToGoogleSheet(String uid, String status) {
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    String fullURL = scriptURL + "?uid=" + uid + "&status=" + status;
+    http.begin(fullURL);
+    int httpCode = http.GET();
+    if (httpCode > 0) {
+      Serial.print("Data sent: ");
+      Serial.println(httpCode);
+    } else {
+      Serial.print("Failed to send. Code: ");
+      Serial.println(httpCode);
+    }
+    http.end();
+  } else {
+    Serial.println("WiFi not connected");
+  }
+}
+
+void printDateTime(const RtcDateTime&amp; dt) {
+  char buf[20];
+  snprintf_P(buf, sizeof(buf), PSTR("%02u/%02u/%04u %02u:%02u:%02u"),
+    dt.Month(), dt.Day(), dt.Year(),
+    dt.Hour(), dt.Minute(), dt.Second());
+  Serial.println(buf);
+}
+</pre>
+    </div>
+  <h2>6. Integration with Google Sheets</h2>
+    <p>The ESP32 sends the UID and access status to a Google Script Web App. The script logs it in a Google Sheet:</p>
+<div class="code">
+<pre>
+function doPost(e) {
+  var ss = SpreadsheetApp.openById("YOUR_SHEET_ID");
+  var sheet = ss.getSheetByName("Sheet1");
+  var uid = e.parameter.uid;
+  var status = e.parameter.status;
+  var timestamp = new Date();
+  sheet.appendRow([timestamp, uid, status]);
+  return ContentService.createTextOutput("Success");
+}
+</pre>
+</div>
+
+    <h2>7. Output Demo</h2>
+    <div class="center-image">
+    <img src="./rfidimgs/rfidckt.jpg" alt="Final Design">
+    <img src="./rfidimgs/rfidoutput.png" alt="">
+</div>
+    <div class="video-wrapper">
+      <video class="output-video" controls muted>
+        <source src="./rfidimgs/rfid-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="download-box">
+  <a href="https://docs.google.com/document/d/1-D8CWI9BajK2B1zF-3FimAzDvA-H_a6BVxzoStsaGmQ/edit?tab=t.0#heading=h.trs59uanqf8w" download>
+    📄 View Documentation 
+  </a>
+</div>
+
+
+    <h2>8. Conclusion</h2>
+    <p>This assignment helped integrate multiple modules—RFID, LCD, servo, RTC, and Wi-Fi—to build a real-time, interactive access system with cloud logging.</p>
+  </div>
+<br><br><br><br>
+  <footer>
+    <div class="icons">
+      <a href="https://www.linkedin.com/in/sriabirami-s-91207a295"><i class="bi bi-linkedin"></i></a>
+      <a href="mailto:sriabirami.3.3@protosem.tech"><i class="bi bi-envelope"></i></a>
+      <a href="https://www.instagram.com/abi__0210/"><i class="bi bi-instagram"></i></a>
+      <a href="tel:+9361275297"><i class="bi bi-telephone"></i></a>
+    </div>
+  </footer>
+ <div class="pointer"></div>
+    <script>
+        const pointer = document.querySelector('.pointer');
+        const body = document.body;
+        const trailLength = 15; // Adjust the number of trailing particles
+        const trailParticles = [];
+        const history = []; // Store mouse positions
+        const historyLimit = 20; // How many past positions to remember
+    
+        let mouseX = 0;
+        let mouseY = 0;
+    
+        for (let i = 0; i < trailLength; i++) {
+            const trail = document.createElement('div');
+            trail.classList.add('trail');
+            body.appendChild(trail);
+            trailParticles.push(trail);
+        }
+    
+        body.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            pointer.style.left = `${mouseX}px`;
+            pointer.style.top = `${mouseY}px`;
+    
+            pointer.style.width = '22px';
+            pointer.style.height = '22px';
+            setTimeout(() => {
+                pointer.style.width = '20px';
+                pointer.style.height = '20px';
+            }, 100);
+    
+            // Add current mouse position to history
+            history.push({ x: mouseX, y: mouseY });
+            if (history.length > historyLimit) {
+                history.shift(); // Remove the oldest position
+            }
+    
+            updateTrail();
+        });
+    
+        function updateTrail() {
+            trailParticles.forEach((particle, index) => {
+                const historyIndex = history.length - 1 - Math.floor(index * (history.length / trailParticles.length));
+                const point = history[Math.max(0, historyIndex)];
+    
+                if (point) {
+                    particle.style.left = `${point.x}px`;
+                    particle.style.top = `${point.y}px`;
+                    particle.style.opacity = (index / trailParticles.length); // Fade based on index
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.4 + (1 - index / trailParticles.length) * 0.6})`; // Scale based on index
+                } else {
+                    particle.style.opacity = 0; // Hide if no history yet
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: black;
+  color: white;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+nav {
+  background-image: url(../../rosimgs/ROSBG.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 20px;
+  font-style: italic;
+}
+nav h1 {
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 69px;
+  font-style: italic;
+  margin: 0;
+}
+ h1{
+   transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+h1:hover {
+  text-shadow:5px 5px 7px rgb(18,145,236);
+  transform: scale(1.05); /* Make the text scale up slightly on hover */
+}
+nav ul, nav li, nav h2 {
+  display: inline;
+}
+nav ul {
+  margin-left: 60%;
+}
+nav li {
+  margin-left: 10px;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+}
+nav a:hover {
+  color: skyblue;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgb(71, 65, 65);
+  border-radius: 10px;
+  box-shadow: 12px 12px 15px rgb(172, 199, 218);
+}
+
+h2 {
+  color: skyblue;
+  margin-top: 30px;
+}
+ul {
+  padding-left: 20px;
+}
+ul li {
+  margin-bottom: 8px;
+}
+
+.code {
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 6px;
+  font-family: monospace;
+  color: #e5e5e5;
+  white-space: pre-wrap;
+  margin-top: 15px;
+  overflow-x: auto;
+}
+
+.center-video {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.video-box {
+  width: 700px;
+  height: 480px;
+  border: 2px solid white;
+  border-radius: 10px;
+      box-shadow: 10px 10px 10px rgb(31, 144, 200);
+
+}
+.video-box:hover video{
+   transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue;
+}
+video{
+   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+}
+video:hover{
+   transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue;
+}
+
+.download-box {
+  width: fit-content;
+  margin: 30px auto;
+  padding: 12px 20px;
+  background-color: #222;
+  border: 2px solid skyblue;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 5px 5px 15px rgba(135, 206, 235, 0.3);
+}
+
+.download-box a {
+  color: skyblue;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.download-box a:hover {
+  color: white;
+}
+
+.icons{
+  text-align: center;
+  padding: 10px;
+  font-size: 40px;
+  background-color: #111;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin:0px;
+}
+.icons a{
+  color: skyblue;
+  text-decoration: none;
+  display: inline-block; /* Ensure transform works correctly */
+transition: transform 0.3s ease-in-out;
+  /*margin: 0 15px;*/
+}
+.icons a:hover{
+  color: white;
+  transform: scale(1.2); 
+}
+  
+body {
+        cursor: none; /* Hide the default cursor */
+    }
+
+    .pointer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50px; /* Slightly bigger main pointer */
+        height: 50px; 
+        
+        background: radial-gradient(circle, rgb(18,145,236) 0%, rgb(18,145,236) 100%);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        mix-blend-mode: screen;
+        transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.2s ease-in-out;
+        filter: blur(3px);
+    }
+
+    .trail {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        background:rgb(18,145,236);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 9998;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.2s ease-out;
+        filter: blur(2px);
+    }
+
+.center-image {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+   
+  }
+  .center-image img {
+    width: 400px;
+    height: 300px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    float: right;
+    display:flex;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+  }
+    .center-image:hover img{
+   transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue;
+}
+img{
+   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+}
+img:hover{
+   transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue;
+}

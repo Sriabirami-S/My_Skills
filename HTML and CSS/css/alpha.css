@@ -1,0 +1,180 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: black;
+  color: white;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+nav {
+  background-image: url(../../alphaimgs/alphb.avif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 20px;
+  font-style: italic;
+}
+nav h1 {
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 69px;
+  font-style: italic;
+  margin: 0;
+}
+ h1{
+   transition: text-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+h1:hover {
+  text-shadow:5px 5px 7px rgb(58, 60, 64);
+  transform: scale(1.05); /* Make the text scale up slightly on hover */
+}
+nav ul, nav li, nav h2 {
+  display: inline;
+}
+nav ul {
+  margin-left: 60%;
+}
+nav li {
+  margin-left: 10px;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+}
+nav a:hover {
+  color: skyblue;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgb(71, 65, 65);
+  border-radius: 10px;
+  box-shadow: 12px 12px 15px rgb(172, 199, 218);
+}
+
+h2 {
+  color: skyblue;
+  margin-top: 30px;
+}
+ul {
+  padding-left: 20px;
+}
+ul li {
+  margin-bottom: 8px;
+}
+h3 {
+  color: lightblue;
+  margin-top: 20px;
+}
+
+img {
+  width: 300px;
+  height: 200px;
+  max-width: 700px;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid white;
+  border-radius: 10px;
+}
+img{
+   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+}
+img:hover{
+   transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue;
+}
+
+video {
+  width: 500px;
+  height: 400px;
+  max-width: 700px;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid white;
+  border-radius: 10px;
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+ transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+    box-shadow: 10px 10px 10px rgb(31, 144, 200);
+}
+
+video:hover{
+   transform: scale(1.05); /* Adjust the scale factor for the pop-up size */
+    box-shadow: 12px 12px 15px skyblue;
+}
+
+.download-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: rgb(28, 134, 238);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.download-btn:hover {
+  background-color: rgb(18, 106, 202);
+}
+
+.icons {
+  text-align: center;
+  padding: 10px;
+  font-size: 40px;
+  background-color: #111;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.icons a {
+  color: skyblue;
+  text-decoration: none;
+    display: inline-block; /* Ensure transform works correctly */
+
+  transition: transform 0.3s ease-in-out;
+}
+.icons a:hover {
+  color: white;
+  transform: scale(1.2);
+}
+body {
+        cursor: none; /* Hide the default cursor */
+    }
+
+    .pointer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50px; /* Slightly bigger main pointer */
+        height: 50px; 
+        
+        background: radial-gradient(circle, rgb(18,145,236) 0%, rgb(18,145,236) 100%);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        mix-blend-mode: screen;
+        transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.2s ease-in-out;
+        filter: blur(3px);
+    }
+
+    .trail {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
+        background:rgb(18,145,236);
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 9998;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.2s ease-out;
+        filter: blur(2px);
+    }
